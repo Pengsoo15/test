@@ -3,26 +3,6 @@
 // ============================================
 
 /**
- * Initialize theme on page load
- * Checks localStorage for saved theme preference
- */
-document.addEventListener('DOMContentLoaded', function() {
-    // Load saved theme or default to light
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        updateThemeToggleIcon('☀️');
-    }
-
-    // Initialize all event listeners
-    initThemeToggle();
-    initMobileNav();
-    initFormValidation();
-    initFadeInObserver();
-});
-
-/**
  * Theme toggle button handler
  */
 function initThemeToggle() {
@@ -79,6 +59,46 @@ function initMobileNav() {
             });
         });
     }
+}
+
+// ============================================
+// Dropdown Menu (Click-based)
+// ============================================
+
+function initDropdown() {
+    const dropdown = document.querySelector('.dropdown');
+    const dropbtn = document.querySelector('.dropbtn');
+    
+    if (!dropdown || !dropbtn) return;
+
+    // Toggle dropdown on button click
+    dropbtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Close dropdown when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Close dropdown when clicking a menu item
+    const dropdownLinks = dropdown.querySelectorAll('.dropdown-menu a');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            dropdown.classList.remove('active');
+        });
+    });
 }
 
 // ============================================
@@ -153,7 +173,7 @@ function validateForm() {
 
     // Check terms checkbox
     const termsCheckbox = document.getElementById('terms');
-    if (!termsCheckbox.checked) {
+    if (termsCheckbox && !termsCheckbox.checked) {
         alert('Please confirm the terms before submitting.');
         isValid = false;
     }
@@ -229,47 +249,11 @@ function initFadeInObserver() {
         });
     }
 }
+
 // ============================================
-// Dropdown Menu (Click-based)
+// INITIALIZE EVERYTHING ON PAGE LOAD
 // ============================================
 
-function initDropdown() {
-    const dropdown = document.querySelector('.dropdown');
-    const dropbtn = document.querySelector('.dropbtn');
-    
-    if (!dropdown || !dropbtn) return;
-
-    // Toggle dropdown on button click
-    dropbtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        dropdown.classList.toggle('active');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!dropdown.contains(e.target)) {
-            dropdown.classList.remove('active');
-        }
-    });
-
-    // Close dropdown when pressing Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            dropdown.classList.remove('active');
-        }
-    });
-
-    // Close dropdown when clicking a menu item
-    const dropdownLinks = dropdown.querySelectorAll('.dropdown-menu a');
-    dropdownLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            dropdown.classList.remove('active');
-        });
-    });
-}
-
-// Update the DOMContentLoaded section in script.js
 document.addEventListener('DOMContentLoaded', function() {
     // Load saved theme or default to light
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -282,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all event listeners
     initThemeToggle();
     initMobileNav();
+    initDropdown();
     initFormValidation();
     initFadeInObserver();
-    initDropdown(); // Add this line
 });
