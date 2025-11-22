@@ -1,0 +1,146 @@
+{
+  "greetings": [
+    {
+      "keywords": ["hello", "hi", "hey", "greetings"],
+      "responses": [
+        "Hello! 👋 How can I help you learn about AI today?",
+        "Hi there! What would you like to know about AI?",
+        "Hey! I'm here to answer your AI questions!"
+      ]
+    }
+  ],
+   "hate": [
+    {
+      "keywords": ["hate", "stupid", "dumb", "idiot", "useless", "bitch"
+        ,"ulol", "pakyu", "tanginamo", "tarantado", "gago", "tanga", "bobo"
+        , "putanginamo", "leche", "inutil", "fuck you"
+    
+    ],
+      "responses": [
+            "ayoko na sayo, wala kang kwentang tao bobo ka haha"
+      ]
+    }
+    ],
+
+   
+
+    "definitions": [
+    {
+      "keywords": ["what is ai", "define ai", "ai definition"],
+      "response": "AI stands for Artificial Intelligence — it's technology that enables machines to learn from data, make decisions, and perform tasks that typically require human intelligence."
+    },
+    {
+      "keywords": ["machine learning", "ml"],
+      "response": "Machine Learning is a subset of AI where systems learn from data without being explicitly programmed. They improve their performance over time through experience!"
+    },
+    {
+      "keywords": ["deep learning"],
+      "response": "Deep Learning uses multi-layered neural networks to process complex data like images, text, and audio. It's behind many modern AI breakthroughs!"
+    },
+    {
+      "keywords": ["neural network", "ann"],
+      "response": "Neural networks are computing systems inspired by the human brain. They process information through interconnected nodes (neurons) and learn patterns from data."
+    },
+    {
+      "keywords": ["nlp", "natural language"],
+      "response": "Natural Language Processing (NLP) helps AI understand and generate human language. It powers chatbots, translation services, and voice assistants!"
+    }
+  ],
+  "models": [
+    {
+      "keywords": ["chatgpt", "gpt", "llm", "language model"],
+      "response": "ChatGPT and similar Large Language Models (LLMs) are trained on vast amounts of text to understand and generate human-like responses. They're revolutionizing how we interact with AI!"
+    },
+    {
+      "keywords": ["transformer"],
+      "response": "Transformers are a neural network architecture that uses attention mechanisms. They power modern LLMs like GPT, BERT, and Claude!"
+    },
+    {
+      "keywords": ["bert"],
+      "response": "BERT (Bidirectional Encoder Representations from Transformers) is a model that understands context by looking at words from both directions. It's great for understanding language!"
+    }
+  ],
+  "technologies": [
+    {
+      "keywords": ["computer vision", "image recognition"],
+      "response": "Computer Vision enables AI to interpret and understand visual information from images and videos. It's used in facial recognition, self-driving cars, and medical imaging!"
+    },
+    {
+      "keywords": ["cnn", "convolutional"],
+      "response": "Convolutional Neural Networks (CNNs) are specialized for processing images. They're the backbone of most computer vision systems!"
+    },
+    {
+      "keywords": ["rnn", "recurrent"],
+      "response": "Recurrent Neural Networks (RNNs) are designed for sequential data like text and time series. They maintain memory of previous inputs!"
+    }
+  ],
+  "learning_types": [
+    {
+      "keywords": ["supervised learning"],
+      "response": "Supervised Learning uses labeled training data where the correct answers are provided. It's like learning with a teacher!"
+    },
+    {
+      "keywords": ["unsupervised learning"],
+      "response": "Unsupervised Learning finds patterns in unlabeled data without explicit guidance. It's like exploring and discovering patterns on your own!"
+    },
+    {
+      "keywords": ["reinforcement learning"],
+      "response": "Reinforcement Learning is where an agent learns by interacting with an environment and receiving rewards or penalties. Think of how games are mastered through trial and error!"
+    }
+  ],
+  "applications": [
+    {
+      "keywords": ["use cases", "applications", "examples", "where is ai used"],
+      "response": "AI is everywhere! Examples include: virtual assistants (Siri, Alexa), recommendation systems (Netflix, Spotify), self-driving cars, medical diagnosis, fraud detection, and content generation!"
+    },
+    {
+      "keywords": ["self-driving", "autonomous vehicle"],
+      "response": "Self-driving cars use computer vision, sensors, and machine learning to navigate roads safely. Companies like Tesla, Waymo, and Cruise are leading this technology!"
+    }
+  ],
+  "history": [
+    {
+      "keywords": ["history", "when was ai created", "ai history"],
+      "response": "AI was officially born at the Dartmouth Conference in 1956. Major milestones include Deep Blue beating Kasparov (1997), Watson winning Jeopardy (2011), and ChatGPT launching (2022)!"
+    },
+    {
+      "keywords": ["turing test", "alan turing"],
+      "response": "The Turing Test, proposed by Alan Turing in 1950, measures a machine's ability to exhibit intelligent behavior indistinguishable from a human."
+    }
+  ],
+  "future": [
+    {
+      "keywords": ["future", "agi", "artificial general intelligence"],
+      "response": "The future of AI is exciting! We're moving toward more powerful models, better human-AI collaboration, and possibly AGI — AI with human-level intelligence across all domains."
+    }
+  ],
+  "learning_resources": [
+    {
+      "keywords": ["learn", "study", "start", "how to learn ai"],
+      "response": "Great question! Start with Python programming, study machine learning fundamentals, and practice with online courses like Coursera, fast.ai, or deeplearning.ai. Our AI Catalog has great tools to explore!"
+    }
+  ],
+  "farewell": [
+    {
+      "keywords": ["bye", "goodbye", "see you", "exit"],
+      "responses": [
+        "Goodbye! 👋 Come back anytime you want to learn more about AI!",
+        "See you later! Keep exploring AI!",
+        "Take care! Feel free to return with more questions!"
+      ]
+    }
+  ],
+  "thanks": [
+    {
+      "keywords": ["thank", "thanks"],
+      "responses": [
+        "You're welcome! Feel free to ask me anything else about AI! 😊",
+        "Happy to help! What else would you like to know?",
+        "My pleasure! Keep those questions coming!"
+      ]
+    }
+  ],
+  "default": {
+    "response": "That's an interesting question! I'm still learning, but you can explore our AI Catalog and Glossary for more information. Try asking about 'machine learning', 'deep learning', 'ChatGPT', or 'computer vision'!"
+  }
+}
