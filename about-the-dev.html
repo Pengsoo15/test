@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Developers - AI Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for contact popup */
+        .dev-card {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dev-card::after {
+            content: '👆 Click for contact';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--muted);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .dev-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Contact Popup Modal */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .contact-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--border);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .contact-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--muted);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-close:hover {
+            background: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .contact-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .contact-name {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-role {
+            color: var(--muted);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-value {
+            color: var(--text);
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .contact-value a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-value a:hover {
+            color: var(--accent-2);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.2s;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .contact-content {
+                padding: 25px 20px;
+            }
+
+            .contact-avatar {
+                width: 80px;
+                height: 80px;
+            }
+
+            .contact-name {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-brand">AI Finder</div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                
+                <!-- Dropdown Menu for "What is AI?" -->
+                <li class="dropdown">
+                    <button class="dropbtn">
+                        What is AI?
+                        <span class="arrow">▾</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="what-is-ai.html">What is AI?</a></li>
+                        <li><a href="ai-timeline.html">AI Timeline</a></li>
+                        <li><a href="ai-quiz.html">AI Quiz</a></li>
+                        <li><a href="ai-chatbot.html">AI Chatbot</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="list-of-ai.html">AI Catalog</a></li>
+                <li><a href="frameset.html">AI Glossary</a></li>
+                <li><a href="submit-ai.html">Submit AI</a></li>
+                <li><a href="about-the-dev.html" class="active">About</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        🌙
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-main">
+        <header class="page-header fade-in">
+            <h1>Meet the Team</h1>
+            <p class="page-subtitle">The passionate developers behind AI Finder</p>
+        </header>
+
+        <!-- Mission Statement -->
+        <section class="mission-card fade-in">
+            <h2>🎯 Our Mission</h2>
+            <p>
+                We believe AI should be accessible to everyone. Our mission is to curate and showcase the best AI tools available, 
+                making it easier for students, creators, and developers to discover technologies that can enhance their work and creativity. 
+                Through AI Finder, we aim to democratize access to cutting-edge AI and foster a community of informed users.
+            </p>
+        </section>
+
+        <!-- Developer Cards -->
+        <section class="team-grid fade-in">
+            <!-- Developer 1 -->
+            <article class="dev-card" onclick="openContact('alex')">
+                <img src="https://via.placeholder.com/120/3CB371/ffffff?text=AS" alt="Alex Santos avatar" class="dev-avatar">
+                <h3>Alex Santos</h3>
+                <p class="dev-role">Lead Developer</p>
+                <p class="dev-bio">
+                    Full-stack developer passionate about making AI accessible. Specializes in web development and UX design.
+                </p>
+            </article>
+
+            <!-- Developer 2 -->
+            <article class="dev-card" onclick="openContact('maria')">
+                <img src="https://via.placeholder.com/120/3CB371/ffffff?text=MC" alt="Maria Cruz avatar" class="dev-avatar">
+                <h3>Maria Cruz</h3>
+                <p class="dev-role">AI Research Specialist</p>
+                <p class="dev-bio">
+                    Machine learning enthusiast who curates our AI catalog. She ensures we feature the latest and most reliable tools.
+                </p>
+            </article>
+
+            <!-- Developer 3 -->
+            <article class="dev-card" onclick="openContact('john')">
+                <img src="https://via.placeholder.com/120/3CB371/ffffff?text=JL" alt="John Lee avatar" class="dev-avatar">
+                <h3>John Lee</h3>
+                <p class="dev-role">Content Writer</p>
+                <p class="dev-bio">
+                    Tech writer dedicated to simplifying complex AI concepts. Creates beginner-friendly content and tutorials.
+                </p>
+            </article>
+
+            <!-- Developer 4 -->
+            <article class="dev-card" onclick="openContact('sofia')">
+                <img src="https://via.placeholder.com/120/3CB371/ffffff?text=SR" alt="Sofia Rodriguez avatar" class="dev-avatar">
+                <h3>Sofia Rodriguez</h3>
+                <p class="dev-role">UI/UX Designer</p>
+                <p class="dev-bio">
+                    Designer focused on creating intuitive, beautiful interfaces. Ensures AI Finder is both functional and delightful to use.
+                </p>
+            </article>
+        </section>
+    </main>
+
+    <!-- Contact Modal -->
+    <div class="contact-modal" id="contactModal">
+        <div class="contact-content">
+            <button class="contact-close" onclick="closeContact()">×</button>
+            
+            <div class="contact-header">
+                <img src="" alt="" class="contact-avatar" id="modalAvatar">
+                <h2 class="contact-name" id="modalName"></h2>
+                <p class="contact-role" id="modalRole"></p>
+            </div>
+
+            <div class="contact-info" id="contactInfo">
+                <!-- Contact details will be inserted here -->
+            </div>
+
+            <div class="social-links" id="socialLinks">
+                <!-- Social links will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2024 AI Finder. All rights reserved.</p>
+        <p><a href="frameset.html">View AI Glossary</a> | <a href="index.html">Back to Home</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Developer contact data
+        const developers = {
+            alex: {
+                name: "Alex Santos",
+                role: "Lead Developer",
+                avatar: "https://via.placeholder.com/120/3CB371/ffffff?text=AS",
+                email: "alex.santos@aifinder.com",
+                phone: "+1 (555) 123-4567",
+                website: "https://alexsantos.dev",
+                social: {
+                    github: "https://github.com/alexsantos",
+                    linkedin: "https://linkedin.com/in/alexsantos",
+                    twitter: "https://twitter.com/alexsantos"
+                }
+            },
+            maria: {
+                name: "Maria Cruz",
+                role: "AI Research Specialist",
+                avatar: "https://via.placeholder.com/120/3CB371/ffffff?text=MC",
+                email: "maria.cruz@aifinder.com",
+                phone: "+1 (555) 234-5678",
+
+                website: "https://mariacruz.ai",
+                social: {
+                    github: "https://github.com/mariacruz",
+                    linkedin: "https://linkedin.com/in/mariacruz",
+                    twitter: "https://twitter.com/mariacruz_ai"
+                }
+            },
+            john: {
+                name: "John Lee",
+                role: "Content Writer",
+                avatar: "https://via.placeholder.com/120/3CB371/ffffff?text=JL",
+                email: "john.lee@aifinder.com",
+                phone: "+1 (555) 345-6789",
+                website: "https://johnlee.blog",
+                social: {
+                    github: "https://github.com/johnlee",
+                    linkedin: "https://linkedin.com/in/johnleewriter",
+                    twitter: "https://twitter.com/johnlee_writes"
+                }
+            },
+            sofia: {
+                name: "Sofia Rodriguez",
+                role: "UI/UX Designer",
+                avatar: "https://via.placeholder.com/120/3CB371/ffffff?text=SR",
+                email: "sofia.rodriguez@aifinder.com",
+                phone: "+1 (555) 456-7890",
+                website: "https://sofiarodriguez.design",
+                social: {
+                    github: "https://github.com/sofiarodriguez",
+                    linkedin: "https://linkedin.com/in/sofiarodriguez",
+                    twitter: "https://twitter.com/sofia_designs"
+                }
+            }
+        };
+
+        // Open contact modal
+        function openContact(devId) {
+            const dev = developers[devId];
+            if (!dev) return;
+
+            const modal = document.getElementById('contactModal');
+            const modalAvatar = document.getElementById('modalAvatar');
+            const modalName = document.getElementById('modalName');
+            const modalRole = document.getElementById('modalRole');
+            const contactInfo = document.getElementById('contactInfo');
+            const socialLinks = document.getElementById('socialLinks');
+
+            // Set header info
+            modalAvatar.src = dev.avatar;
+            modalAvatar.alt = `${dev.name} avatar`;
+            modalName.textContent = dev.name;
+            modalRole.textContent = dev.role;
+
+            // Build contact info
+            contactInfo.innerHTML = `
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <div class="contact-details">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">
+                            <a href="mailto:${dev.email}">${dev.email}</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <div class="contact-details">
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">
+                            <a href="tel:${dev.phone.replace(/\s/g, '')}">${dev.phone}</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="contact-item">
+                    <span class="contact-icon">🌐</span>
+                    <div class="contact-details">
+                        <div class="contact-label">Website</div>
+                        <div class="contact-value">
+                            <a href="${dev.website}" target="_blank" rel="noopener noreferrer">${dev.website}</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Build social links
+            socialLinks.innerHTML = `
+                <a href="${dev.social.github}" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                    <span>⚙️</span>
+                </a>
+                <a href="${dev.social.linkedin}" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                    <span>💼</span>
+                </a>
+                <a href="${dev.social.twitter}" target="_blank" rel="noopener noreferrer" class="social-link" title="Twitter">
+                    <span>🐦</span>
+                </a>
+            `;
+
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Close contact modal
+        function closeContact() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContact();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeContact();
+            }
+        });
+    </script>
+</body>
+</html>
