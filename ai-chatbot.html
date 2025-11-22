@@ -276,8 +276,33 @@
         <p><a href="frameset.html">View AI Glossary</a></p>
     </footer>
 
+
     <script src="script.js"></script>
     <script>
+        // Apply saved theme immediately
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <script>
+        // Load chatbot data
+        let chatbotData = null;
+
+        // Fetch the JSON data file
+        fetch('chatbot-data.json')
+            .then(response => response.json())
+            .then(data => {
+                chatbotData = data;
+                console.log('Chatbot data loaded successfully!');
+            })
+            .catch(error => {
+                console.error('Error loading chatbot data:', error);
+                // Fallback to basic responses if file not found
+            });
+
         function sendMessage() {
             const input = document.getElementById("inputMsg");
             const msg = input.value.trim();
@@ -310,78 +335,47 @@
         }
 
         function botReply(input) {
-            // Greetings
-            if (input.includes("hello") || input.includes("hi") || input.includes("hey")) {
-                return "Hello! 👋 How can I help you learn about AI today?";
-            }
-            
-            // What is AI
-            if (input.includes("what is ai") || input.includes("define ai")) {
-                return "AI stands for Artificial Intelligence — it's technology that enables machines to learn from data, make decisions, and perform tasks that typically require human intelligence.";
-            }
-            
-            // Machine Learning
-            if (input.includes("machine learning") || input.includes("ml")) {
-                return "Machine Learning is a subset of AI where systems learn from data without being explicitly programmed. They improve their performance over time through experience!";
-            }
-            
-            // Models
-            if (input.includes("model") || input.includes("neural network")) {
-                return "AI models learn patterns from data to make predictions or generate content. Neural networks, inspired by the human brain, are a popular type of model used in deep learning.";
-            }
-            
-            // Deep Learning
-            if (input.includes("deep learning")) {
-                return "Deep Learning uses multi-layered neural networks to process complex data like images, text, and audio. It's behind many modern AI breakthroughs!";
-            }
-            
-            // ChatGPT / LLMs
-            if (input.includes("chatgpt") || input.includes("gpt") || input.includes("llm")) {
-                return "ChatGPT and similar Large Language Models (LLMs) are trained on vast amounts of text to understand and generate human-like responses. They're revolutionizing how we interact with AI!";
-            }
-            
-            // Computer Vision
-            if (input.includes("computer vision") || input.includes("image")) {
-                return "Computer Vision enables AI to interpret and understand visual information from images and videos. It's used in facial recognition, self-driving cars, and medical imaging!";
-            }
-            
-            // NLP
-            if (input.includes("nlp") || input.includes("natural language")) {
-                return "Natural Language Processing (NLP) helps AI understand and generate human language. It powers chatbots, translation services, and voice assistants!";
-            }
-            
-            // Future of AI
-            if (input.includes("future") || input.includes("agi")) {
-                return "The future of AI is exciting! We're moving toward more powerful models, better human-AI collaboration, and possibly Artificial General Intelligence (AGI) — AI with human-level intelligence across all domains.";
-            }
-            
-            // How does AI work
-            if (input.includes("how") && input.includes("work")) {
-                return "AI works by processing large amounts of data, identifying patterns, and making predictions or decisions based on those patterns. It learns through training and improves over time!";
-            }
-            
-            // Use cases
-            if (input.includes("use") || input.includes("application") || input.includes("example")) {
-                return "AI is used everywhere! Examples include: virtual assistants (Siri, Alexa), recommendation systems (Netflix, Spotify), self-driving cars, medical diagnosis, and content generation!";
-            }
-            
-            // Learning AI
-            if (input.includes("learn") || input.includes("study") || input.includes("start")) {
-                return "Great question! Start with the basics: learn Python programming, study machine learning fundamentals, and practice with online courses like Coursera or fast.ai. Our AI Catalog has great tools to explore!";
-            }
-            
-            // Goodbye
-            if (input.includes("bye") || input.includes("goodbye") || input.includes("see you")) {
-                return "Goodbye! 👋 Come back anytime you want to learn more about AI!";
-            }
-            
-            // Thank you
-            if (input.includes("thank")) {
-                return "You're welcome! Feel free to ask me anything else about AI! 😊";
+            // If data hasn't loaded yet, return a loading message
+            if (!chatbotData) {
+                return "I'm still loading my knowledge base. Please try again in a moment!";
             }
 
-            // Default response
-            return "That's an interesting question! I'm still learning, but you can explore our AI Catalog and Glossary for more information. Try asking about 'machine learning', 'deep learning', or 'ChatGPT'!";
+            // Check each category in the data
+            const categories = [
+                'greetings',
+                'definitions',
+                'models',
+                'technologies',
+                'learning_types',
+                'applications',
+                'history',
+                'future',
+                'learning_resources',
+                'farewell',
+                'thanks',
+                'hate'
+            ];
+
+            // Search through categories
+            for (let category of categories) {
+                if (chatbotData[category]) {
+                    for (let item of chatbotData[category]) {
+                        // Check if any keyword matches the input
+                        for (let keyword of item.keywords) {
+                            if (input.includes(keyword)) {
+                                // If multiple responses available, pick random one
+                                if (item.responses) {
+                                    return item.responses[Math.floor(Math.random() * item.responses.length)];
+                                }
+                                return item.response;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If no match found, return default response
+            return chatbotData.default.response;
         }
 
         // Auto-focus input on load
