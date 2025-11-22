@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Finder - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" aria-label="Main navigation">
+    <div class="nav-container">
+        <div class="nav-brand">AI Finder</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            
+            <!-- Dropdown Menu for "What is AI?" -->
+            <li class="dropdown">
+                <button class="dropbtn">
+                    What is AI?
+                    <span class="arrow">▾</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="what-is-ai.html">What is AI?</a></li>
+                    <li><a href="ai-timeline.html">AI Timeline</a></li>
+                    <li><a href="ai-quiz.html">AI Quiz</a></li>
+                    <li><a href="ai-chatbot.html">AI Chatbot</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="list-of-ai.html">AI Catalog</a></li>
+            <li><a href="frameset.html">AI Glossary</a></li>
+            <li><a href="submit-ai.html">Submit AI</a></li>
+            <li><a href="about-the-dev.html">About</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    🌙
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <!-- Main Content -->
+    <main class="homepage-main">
+        <!-- Logo positioned top-right -->
+        <div class="logo-container">
+            <img src="https://via.placeholder.com/80/3CB371/ffffff?text=AI" alt="AI Finder Logo" class="site-logo">
+        </div>
+
+        <!-- Intro Section -->
+        <section class="hero-section fade-in">
+            <h1>Welcome to AI Finder</h1>
+            <p class="hero-subtitle">
+                AI Finder is a curated collection of AI tools designed to help students, creators, and developers explore powerful modern AI technologies.
+            </p>
+        </section>
+
+        <!-- Call-to-Action Cards Grid -->
+        <section class="cta-section fade-in">
+            <a href="list-of-ai.html" class="cta-card">
+                <div class="cta-icon">🔍</div>
+                <h2>Explore AI Tools</h2>
+                <p>Browse our catalog of the latest AI technologies</p>
+            </a>
+            
+            <a href="submit-ai.html" class="cta-card">
+                <div class="cta-icon">➕</div>
+                <h2>Submit an AI Tool</h2>
+                <p>Share your favorite AI discovery with the community</p>
+            </a>
+            
+            <a href="ai-timeline.html" class="cta-card">
+                <div class="cta-icon">📜</div>
+                <h2>AI Timeline</h2>
+                <p>Explore the history and evolution of AI</p>
+            </a>
+            
+            <a href="ai-chatbot.html" class="cta-card">
+                <div class="cta-icon">🤖</div>
+                <h2>AI Chatbot</h2>
+                <p>Chat with our AI assistant about technology</p>
+            </a>
+
+            <a href="ai-quiz.html" class="cta-card">
+                <div class="cta-icon">📝</div>
+                <h2>AI Quiz</h2>
+                <p>Test your knowledge about Artificial Intelligence</p>
+            </a>
+
+            <a href="frameset.html" class="cta-card">
+                <div class="cta-icon">📚</div>
+                <h2>AI Glossary</h2>
+                <p>Learn AI terminology with our searchable glossary</p>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2024 AI Finder. All rights reserved.</p>
+        <p><a href="frameset.html">View AI Glossary</a> | <a href="about-the-dev.html">Meet the Team</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

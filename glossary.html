@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Glossary</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.25s, color 0.25s;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #0b0f12;
+            color: #e6f7eb;
+        }
+
+        body.dark-mode .glossary-header {
+            background: #2a9d5f;
+        }
+
+        body.dark-mode .search-container {
+            background: #0f1416;
+            border-bottom-color: #1f2937;
+        }
+
+        body.dark-mode .search-box {
+            background: #0b0f12;
+            color: #e6f7eb;
+            border-color: #4ade80;
+        }
+
+        body.dark-mode .search-box:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+        }
+
+        body.dark-mode .search-info {
+            color: #9aa5a0;
+        }
+
+        body.dark-mode .glossary-content {
+            background: #0b0f12;
+        }
+
+        body.dark-mode .glossary-content::-webkit-scrollbar-track {
+            background: #0f1416;
+        }
+
+        body.dark-mode .glossary-content::-webkit-scrollbar-thumb {
+            background: #4ade80;
+        }
+
+        body.dark-mode .term-item {
+            background: #0f1416;
+            border-left-color: #4ade80;
+        }
+
+        body.dark-mode .term-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode dt {
+            color: #4ade80;
+        }
+
+        body.dark-mode dd {
+            color: #9aa5a0;
+        }
+
+        body.dark-mode .letter-divider {
+            background: #2a9d5f;
+        }
+
+        body.dark-mode .exit-btn {
+            background: #0f1416;
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+
+        body.dark-mode .exit-btn:hover {
+            background: #4ade80;
+            color: #0b0f12;
+        }
+        
+        .glossary-header {
+            background: #3CB371;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            flex-shrink: 0;
+            transition: background-color 0.25s;
+        }
+
+        .glossary-header h2 {
+            color: white;
+            margin: 0;
+            padding: 0;
+            font-size: 1.3rem;
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 15px;
+            background: white;
+            border-bottom: 2px solid #e5e7eb;
+            flex-shrink: 0;
+            transition: background-color 0.25s, border-color 0.25s;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 2px solid #3CB371;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, background-color 0.25s, color 0.25s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #2a9d5f;
+            box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.1);
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            background: #6b7280;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, transform 0.1s;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .clear-btn:hover {
+            background: #ef4444;
+            transform: scale(1.1);
+        }
+
+        .clear-btn:active {
+            transform: scale(0.95);
+        }
+
+        .clear-btn.visible {
+            display: flex;
+        }
+
+        .search-info {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            transition: color 0.25s;
+        }
+
+        .search-info.no-results {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        /* Exit Button */
+        .exit-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: #3CB371;
+            border: 2px solid #3CB371;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .exit-btn:hover {
+            background: #3CB371;
+            color: white;
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .exit-btn:active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Scrollable Content */
+        .glossary-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 80px; /* Space for exit button */
+            transition: background-color 0.25s;
+        }
+
+        /* Custom Scrollbar */
+        .glossary-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .glossary-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            transition: background-color 0.25s;
+        }
+
+        .glossary-content::-webkit-scrollbar-thumb {
+            background: #3CB371;
+            border-radius: 4px;
+            transition: background-color 0.25s;
+        }
+
+        .glossary-content::-webkit-scrollbar-thumb:hover {
+            background: #2a9d5f;
+        }
+
+        dl {
+            margin: 0;
+        }
+        
+        .term-item {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #3CB371;
+            transition: all 0.2s;
+        }
+
+        .term-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateX(3px);
+        }
+
+        .term-item.hidden {
+            display: none;
+        }
+
+        .term-item mark {
+            background: #fef08a;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        dt {
+            font-weight: bold;
+            color: #2c5f45;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            transition: color 0.25s;
+        }
+        
+        dd {
+            margin: 0;
+            padding-left: 0;
+            color: #555;
+            font-size: 0.85rem;
+            transition: color 0.25s;
+        }
+
+        .letter-divider {
+            background: #3CB371;
+            color: white;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 6px;
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: background-color 0.25s;
+        }
+
+        .letter-divider:first-child {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="glossary-header">
+        <h2>📚 AI Glossary</h2>
+    </div>
+
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input 
+                type="text" 
+                class="search-box" 
+                id="searchBox" 
+                placeholder="🔍 Search terms..." 
+                autocomplete="off"
+            >
+            <button class="clear-btn" id="clearBtn" title="Clear search" aria-label="Clear search">×</button>
+        </div>
+        <div class="search-info" id="searchInfo"></div>
+    </div>
+
+    <div class="glossary-content" id="glossaryContent">
+        
+        <!-- A Section -->
+      <div class="letter-divider">A</div>
+
+      <div class="term-item">
+        <dt>Activation Function</dt>
+        <dd>
+          A mathematical function in neural networks that determines whether a
+          neuron should be activated, introducing non-linearity.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Agent</dt>
+        <dd>
+          An autonomous AI system that perceives its environment and takes
+          actions to achieve specific goals.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Algorithm</dt>
+        <dd>
+          A set of rules or instructions given to an AI system to help it learn
+          and make decisions.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Anomaly Detection</dt>
+        <dd>
+          The identification of rare items, events, or observations that differ
+          significantly from the majority of the data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Artificial General Intelligence (AGI)</dt>
+        <dd>
+          Hypothetical AI with human-level intelligence that can understand,
+          learn, and apply knowledge across different domains.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Artificial Neural Network (ANN)</dt>
+        <dd>
+          Computing systems inspired by biological neural networks that
+          constitute animal brains.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Attention Mechanism</dt>
+        <dd>
+          A technique that allows models to focus on specific parts of input
+          data, crucial in transformers and modern NLP.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Autoencoder</dt>
+        <dd>
+          A neural network that learns to compress data into a lower-dimensional
+          representation and then reconstruct it.
+        </dd>
+      </div>
+
+      <!-- B Section -->
+      <div class="letter-divider">B</div>
+
+      <div class="term-item">
+        <dt>Backpropagation</dt>
+        <dd>
+          An algorithm for training neural networks by adjusting weights based
+          on the error gradient.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Batch Normalization</dt>
+        <dd>
+          A technique to improve neural network training by normalizing layer
+          inputs, making training faster and more stable.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Batch Size</dt>
+        <dd>
+          The number of training examples used in one iteration of model
+          training.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>BERT (Bidirectional Encoder Representations from Transformers)</dt>
+        <dd>
+          A transformer-based model designed to understand context in text by
+          looking at words from both directions.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Bias</dt>
+        <dd>
+          Systematic errors in AI models that can lead to unfair or inaccurate
+          predictions.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Big Data</dt>
+        <dd>
+          Extremely large datasets that can be analyzed computationally to
+          reveal patterns and trends.
+        </dd>
+      </div>
+
+      <!-- C Section -->
+      <div class="letter-divider">C</div>
+
+      <div class="term-item">
+        <dt>Chatbot</dt>
+        <dd>
+          An AI program designed to simulate conversation with human users
+          through text or voice.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Classification</dt>
+        <dd>
+          The task of predicting the category or class of given data points.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Clustering</dt>
+        <dd>
+          An unsupervised learning technique that groups similar data points
+          together.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Computer Vision</dt>
+        <dd>
+          AI technology that enables computers to interpret and understand
+          visual information from images or videos.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Convolutional Neural Network (CNN)</dt>
+        <dd>
+          A type of deep learning network especially effective for processing
+          images and spatial data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Cross-Validation</dt>
+        <dd>
+          A technique for assessing model performance by dividing data into
+          multiple subsets for training and testing.
+        </dd>
+      </div>
+
+      <!-- D Section -->
+      <div class="letter-divider">D</div>
+
+      <div class="term-item">
+        <dt>Data Augmentation</dt>
+        <dd>
+          Techniques to artificially increase training data by creating modified
+          versions of existing data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Data Mining</dt>
+        <dd>
+          The process of discovering patterns and knowledge from large amounts
+          of data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Decision Tree</dt>
+        <dd>
+          A machine learning model that makes predictions by learning simple
+          decision rules from data features.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Deep Learning</dt>
+        <dd>
+          A type of machine learning using multi-layered neural networks to
+          analyze data with complex structures.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Diffusion Model</dt>
+        <dd>
+          A generative model that creates data by gradually denoising random
+          noise, used in image generation.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Dimensionality Reduction</dt>
+        <dd>
+          Reducing the number of variables in data while retaining important
+          information.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Dropout</dt>
+        <dd>
+          A regularization technique that randomly ignores neurons during
+          training to prevent overfitting.
+        </dd>
+      </div>
+
+      <!-- E Section -->
+      <div class="letter-divider">E</div>
+
+      <div class="term-item">
+        <dt>Edge Computing</dt>
+        <dd>
+          Processing data near the source of data generation rather than in
+          centralized cloud servers.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Embedding</dt>
+        <dd>
+          A representation of data (like words) as dense vectors in a continuous
+          space.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Ensemble Learning</dt>
+        <dd>
+          Combining multiple models to produce better predictions than any
+          single model.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Epoch</dt>
+        <dd>
+          One complete pass through the entire training dataset during model
+          training.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Explainable AI (XAI)</dt>
+        <dd>
+          Methods and techniques that make AI decision-making processes
+          transparent and understandable to humans.
+        </dd>
+      </div>
+
+      <!-- F Section -->
+      <div class="letter-divider">F</div>
+
+      <div class="term-item">
+        <dt>Feature</dt>
+        <dd>
+          An individual measurable property or characteristic of a phenomenon
+          being observed.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Feature Engineering</dt>
+        <dd>
+          The process of using domain knowledge to create features that make
+          machine learning algorithms work better.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Few-Shot Learning</dt>
+        <dd>
+          The ability of a model to learn from only a few examples of a new
+          task.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Fine-tuning</dt>
+        <dd>
+          Adapting a pre-trained model to a specific task by training it further
+          on task-specific data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Federated Learning</dt>
+        <dd>
+          A machine learning approach where models are trained across multiple
+          decentralized devices without sharing raw data.
+        </dd>
+      </div>
+
+      <!-- G Section -->
+      <div class="letter-divider">G</div>
+
+      <div class="term-item">
+        <dt>GAN (Generative Adversarial Network)</dt>
+        <dd>
+          Two neural networks (generator and discriminator) that compete to
+          create realistic synthetic data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Generative AI</dt>
+        <dd>
+          AI systems that can create new content like text, images, audio, or
+          video based on training data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>GPT (Generative Pre-trained Transformer)</dt>
+        <dd>
+          A family of large language models designed to generate human-like
+          text.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Gradient Descent</dt>
+        <dd>
+          An optimization algorithm used to minimize the loss function by
+          iteratively adjusting model parameters.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>GPU (Graphics Processing Unit)</dt>
+        <dd>
+          Specialized hardware that accelerates the training and inference of AI
+          models through parallel processing.
+        </dd>
+      </div>
+
+      <!-- H Section -->
+      <div class="letter-divider">H</div>
+
+      <div class="term-item">
+        <dt>Hallucination</dt>
+        <dd>
+          When an AI model generates false or nonsensical information that seems
+          plausible.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Hyperparameter</dt>
+        <dd>
+          Configuration settings used to control the learning process, set
+          before training begins.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Hyperparameter Tuning</dt>
+        <dd>
+          The process of optimizing hyperparameters to improve model
+          performance.
+        </dd>
+      </div>
+
+      <!-- I Section -->
+      <div class="letter-divider">I</div>
+
+      <div class="term-item">
+        <dt>Image Recognition</dt>
+        <dd>
+          The ability of AI to identify objects, people, places, and actions in
+          images.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Inference</dt>
+        <dd>
+          The process of using a trained model to make predictions on new,
+          unseen data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Interpretability</dt>
+        <dd>
+          The degree to which a human can understand the reasoning behind an AI
+          model's decisions.
+        </dd>
+      </div>
+
+      <!-- K Section -->
+      <div class="letter-divider">K</div>
+
+      <div class="term-item">
+        <dt>K-Means Clustering</dt>
+        <dd>
+          An unsupervised learning algorithm that partitions data into K
+          distinct clusters.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Knowledge Graph</dt>
+        <dd>
+          A network of entities and their relationships, used to represent and
+          reason about knowledge.
+        </dd>
+      </div>
+
+      <!-- L Section -->
+      <div class="letter-divider">L</div>
+
+      <div class="term-item">
+        <dt>Labeled Data</dt>
+        <dd>
+          Training data that has been tagged with correct answers or
+          classifications.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Large Language Model (LLM)</dt>
+        <dd>
+          AI models trained on vast amounts of text data to understand and
+          generate human language.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Latency</dt>
+        <dd>The time delay between input and output in an AI system.</dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Learning Rate</dt>
+        <dd>
+          A hyperparameter that controls how much model weights are adjusted
+          during training.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>LSTM (Long Short-Term Memory)</dt>
+        <dd>
+          A type of recurrent neural network capable of learning long-term
+          dependencies in sequential data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Loss Function</dt>
+        <dd>
+          A mathematical function that measures how far a model's predictions
+          are from the actual values.
+        </dd>
+      </div>
+
+      <!-- M Section -->
+      <div class="letter-divider">M</div>
+
+      <div class="term-item">
+        <dt>Machine Learning</dt>
+        <dd>
+          A subset of AI that enables systems to learn and improve from
+          experience without being explicitly programmed.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Model</dt>
+        <dd>
+          A trained AI system that has learned patterns from data and can make
+          predictions.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Model Deployment</dt>
+        <dd>
+          The process of making a trained model available for use in production
+          environments.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Multimodal AI</dt>
+        <dd>
+          AI systems that can process and understand multiple types of data
+          (text, images, audio) simultaneously.
+        </dd>
+      </div>
+
+      <!-- N Section -->
+      <div class="letter-divider">N</div>
+
+      <div class="term-item">
+        <dt>Named Entity Recognition (NER)</dt>
+        <dd>
+          NLP task of identifying and classifying named entities (people,
+          places, organizations) in text.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Natural Language Processing (NLP)</dt>
+        <dd>
+          AI's ability to understand, interpret, and generate human language.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Neural Network</dt>
+        <dd>
+          A computing system inspired by biological neural networks that
+          processes information through interconnected nodes.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Normalization</dt>
+        <dd>
+          Scaling data to a standard range to improve model training
+          performance.
+        </dd>
+      </div>
+
+      <!-- O Section -->
+      <div class="letter-divider">O</div>
+
+      <div class="term-item">
+        <dt>Object Detection</dt>
+        <dd>
+          Computer vision task of identifying and locating objects within images
+          or videos.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>One-Hot Encoding</dt>
+        <dd>
+          A method of representing categorical variables as binary vectors.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Optimization</dt>
+        <dd>
+          The process of adjusting model parameters to minimize the loss
+          function and improve performance.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Overfitting</dt>
+        <dd>
+          When a model learns training data too well, including noise, resulting
+          in poor performance on new data.
+        </dd>
+      </div>
+
+      <!-- P Section -->
+      <div class="letter-divider">P</div>
+
+      <div class="term-item">
+        <dt>Parameters</dt>
+        <dd>
+          Internal variables of a model that are learned from training data
+          (e.g., weights and biases).
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Perceptron</dt>
+        <dd>
+          The simplest form of a neural network, consisting of a single neuron.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Pooling</dt>
+        <dd>
+          A down-sampling operation in CNNs that reduces spatial dimensions
+          while retaining important features.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Pre-training</dt>
+        <dd>
+          Training a model on a large general dataset before fine-tuning it for
+          specific tasks.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Precision</dt>
+        <dd>
+          The ratio of true positive predictions to all positive predictions
+          made by the model.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Prompt</dt>
+        <dd>
+          Input text or instructions given to an AI model to generate desired
+          outputs.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Prompt Engineering</dt>
+        <dd>
+          The practice of designing effective prompts to get better outputs from
+          AI models.
+        </dd>
+      </div>
+
+      <!-- Q Section -->
+      <div class="letter-divider">Q</div>
+
+      <div class="term-item">
+        <dt>Q-Learning</dt>
+        <dd>
+          A reinforcement learning algorithm that learns optimal actions by
+          estimating quality values.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Quantization</dt>
+        <dd>
+          Reducing the precision of model weights to decrease model size and
+          improve inference speed.
+        </dd>
+      </div>
+
+      <!-- R Section -->
+      <div class="letter-divider">R</div>
+
+      <div class="term-item">
+        <dt>Random Forest</dt>
+        <dd>
+          An ensemble learning method that combines multiple decision trees for
+          better predictions.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Recall</dt>
+        <dd>
+          The ratio of true positive predictions to all actual positive
+          instances in the data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Recurrent Neural Network (RNN)</dt>
+        <dd>
+          Neural networks designed to process sequential data by maintaining
+          memory of previous inputs.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Regression</dt>
+        <dd>
+          A prediction task where the model outputs continuous numerical values.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Regularization</dt>
+        <dd>
+          Techniques used to prevent overfitting by adding constraints to the
+          model.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Reinforcement Learning</dt>
+        <dd>
+          A learning approach where an agent learns by interacting with an
+          environment and receiving rewards or penalties.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>ReLU (Rectified Linear Unit)</dt>
+        <dd>
+          A popular activation function that outputs the input if positive,
+          otherwise zero.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Retrieval-Augmented Generation (RAG)</dt>
+        <dd>
+          A technique that enhances LLMs by retrieving relevant information from
+          external sources before generating responses.
+        </dd>
+      </div>
+
+      <!-- S Section -->
+      <div class="letter-divider">S</div>
+
+      <div class="term-item">
+        <dt>Semantic Search</dt>
+        <dd>
+          Search technology that understands the meaning and context of queries
+          rather than just matching keywords.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Sentiment Analysis</dt>
+        <dd>
+          NLP technique to determine the emotional tone (positive, negative,
+          neutral) of text.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Sigmoid Function</dt>
+        <dd>
+          An activation function that maps values to a range between 0 and 1,
+          often used in binary classification.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Speech Recognition</dt>
+        <dd>AI technology that converts spoken language into text.</dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Supervised Learning</dt>
+        <dd>
+          Machine learning using labeled training data where the correct outputs
+          are provided.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Support Vector Machine (SVM)</dt>
+        <dd>
+          A supervised learning algorithm that finds the optimal boundary
+          between different classes.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Synthetic Data</dt>
+        <dd>
+          Artificially generated data used to train models when real data is
+          limited or unavailable.
+        </dd>
+      </div>
+
+      <!-- T Section -->
+      <div class="letter-divider">T</div>
+
+      <div class="term-item">
+        <dt>Temperature</dt>
+        <dd>
+          A parameter controlling randomness in AI text generation; higher
+          values produce more creative outputs.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Test Set</dt>
+        <dd>
+          A portion of data used to evaluate final model performance after
+          training is complete.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Text-to-Speech (TTS)</dt>
+        <dd>AI technology that converts written text into spoken audio.</dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Tokenization</dt>
+        <dd>
+          Breaking down text into smaller units (tokens) like words or subwords
+          for processing.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Training Data</dt>
+        <dd>
+          The dataset used to teach an AI model patterns and relationships.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Transfer Learning</dt>
+        <dd>
+          Applying knowledge learned from one task to help solve a different but
+          related task.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Transformer</dt>
+        <dd>
+          A neural network architecture that uses attention mechanisms, powering
+          modern LLMs like GPT and BERT.
+        </dd>
+      </div>
+
+      <!-- U Section -->
+      <div class="letter-divider">U</div>
+
+      <div class="term-item">
+        <dt>Underfitting</dt>
+        <dd>
+          When a model is too simple to capture the underlying patterns in the
+          data.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Unsupervised Learning</dt>
+        <dd>
+          Machine learning using unlabeled data where the model finds patterns
+          without explicit guidance.
+        </dd>
+      </div>
+
+      <!-- V Section -->
+      <div class="letter-divider">V</div>
+
+      <div class="term-item">
+        <dt>Validation Set</dt>
+        <dd>
+          A portion of data used to evaluate model performance during training
+          and tune hyperparameters.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Vanishing Gradient</dt>
+        <dd>
+          A problem in deep networks where gradients become too small,
+          preventing effective learning.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Vector</dt>
+        <dd>
+          A mathematical representation of data as an array of numbers used in
+          AI computations.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Vision Transformer (ViT)</dt>
+        <dd>
+          Applying transformer architecture to computer vision tasks, treating
+          images as sequences of patches.
+        </dd>
+      </div>
+
+      <!-- W Section -->
+      <div class="letter-divider">W</div>
+
+      <div class="term-item">
+        <dt>Weight</dt>
+        <dd>
+          Parameters in a neural network that determine the strength of
+          connections between neurons.
+        </dd>
+      </div>
+
+      <div class="term-item">
+        <dt>Word Embedding</dt>
+        <dd>
+          Dense vector representations of words that capture semantic
+          relationships.
+        </dd>
+      </div>
+
+      <!-- Z Section -->
+      <div class="letter-divider">Z</div>
+
+      <div class="term-item">
+        <dt>Zero-shot Learning</dt>
+        <dd>
+          The ability of a model to perform tasks it wasn't explicitly trained
+          for, using only its general knowledge.
+        </dd>
+      </div>
+
+      <!-- Z Section -->
+       <div class="letter-divider">brainrot</div>
+
+      <div class="term-item">
+        <dt>Six Seven</dt>
+        <dd>
+            A unexplained meme that means nothing but gained alot of attetion to the world.
+        </dd>
+      </div>
+
+
+
+    </div>
+
+    <!-- Exit Button -->
+    <button class="exit-btn" onclick="exitToHomepage()">
+        <span>← Exit to Homepage</span>
+    </button>
+
+    <script>
+        // Check and apply dark mode from localStorage
+        function applyDarkMode() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        // Apply dark mode on load
+        applyDarkMode();
+
+        // Listen for storage changes (when theme changes in main site)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'theme') {
+                if (e.newValue === 'dark') {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            }
+        });
+
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        const clearBtn = document.getElementById('clearBtn');
+        const searchInfo = document.getElementById('searchInfo');
+        const termItems = document.querySelectorAll('.term-item');
+        const letterDividers = document.querySelectorAll('.letter-divider');
+
+        // Show/hide clear button based on input
+        function toggleClearButton() {
+            if (searchBox.value.trim() !== '') {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+            }
+        }
+
+        // Clear search
+        function clearSearch() {
+            searchBox.value = '';
+            clearBtn.classList.remove('visible');
+            performSearch();
+            searchBox.focus();
+        }
+
+        // Perform search
+        function performSearch() {
+            const searchTerm = searchBox.value.toLowerCase().trim();
+            let visibleCount = 0;
+            let totalCount = termItems.length;
+
+            // Toggle clear button
+            toggleClearButton();
+
+            // If search is empty, show all terms
+            if (searchTerm === '') {
+                termItems.forEach(item => {
+                    item.classList.remove('hidden');
+                    // Remove any highlighting
+                    const dt = item.querySelector('dt');
+                    const dd = item.querySelector('dd');
+                    dt.innerHTML = dt.textContent;
+                    dd.innerHTML = dd.textContent;
+                });
+                letterDividers.forEach(divider => divider.style.display = 'block');
+                searchInfo.textContent = `${totalCount} terms total`;
+                searchInfo.classList.remove('no-results');
+                return;
+            }
+
+            // Search through terms
+            termItems.forEach(item => {
+                const term = item.querySelector('dt').textContent.toLowerCase();
+                const definition = item.querySelector('dd').textContent.toLowerCase();
+                
+                if (term.includes(searchTerm) || definition.includes(searchTerm)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                    
+                    // Highlight matching text
+                    highlightText(item.querySelector('dt'), searchTerm);
+                    highlightText(item.querySelector('dd'), searchTerm);
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Hide letter dividers during search
+            letterDividers.forEach(divider => divider.style.display = 'none');
+
+            // Update search info
+            if (visibleCount === 0) {
+                searchInfo.textContent = 'No matching terms found';
+                searchInfo.classList.add('no-results');
+            } else {
+                searchInfo.textContent = `Found ${visibleCount} matching term${visibleCount !== 1 ? 's' : ''}`;
+                searchInfo.classList.remove('no-results');
+            }
+        }
+
+        // Highlight matching text
+        function highlightText(element, searchTerm) {
+            const originalText = element.textContent;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            element.innerHTML = originalText.replace(regex, '<mark>$1</mark>');
+        }
+
+        // Event listeners
+        searchBox.addEventListener('input', performSearch);
+        clearBtn.addEventListener('click', clearSearch);
+
+        // Allow clearing with Escape key
+        searchBox.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                clearSearch();
+            }
+        });
+
+        // Exit to homepage function
+        function exitToHomepage() {
+            // If in a frameset, redirect parent window
+            if (window.parent && window.parent !== window) {
+                window.parent.location.href = 'index.html';
+            } else {
+                // If opened directly, just redirect
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize search info
+        searchInfo.textContent = `${termItems.length} terms total`;
+    </script>
+</body>
+</html>

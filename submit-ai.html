@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit AI Tool - AI Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" aria-label="Main navigation">
+       <nav class="navbar" aria-label="Main navigation">
+    <div class="nav-container">
+        <div class="nav-brand">AI Finder</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            
+            <!-- Dropdown Menu for "What is AI?" -->
+            <li class="dropdown">
+                <button class="dropbtn">
+                    What is AI?
+                    <span class="arrow">▾</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="what-is-ai.html">What is AI?</a></li>
+                    <li><a href="ai-timeline.html">AI Timeline</a></li>
+                    <li><a href="ai-quiz.html">AI Quiz</a></li>
+                    <li><a href="ai-chatbot.html">AI Chatbot</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="list-of-ai.html">AI Catalog</a></li>
+            <li><a href="frameset.html">AI Glossary</a></li>
+            <li><a href="submit-ai.html">Submit AI</a></li>
+            <li><a href="about-the-dev.html">About</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    🌙
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <!-- Main Content -->
+    <main class="content-main">
+        <header class="page-header fade-in">
+            <h1>Submit an AI Tool</h1>
+            <p class="page-subtitle">Help us grow our catalog by sharing your favorite AI tools</p>
+        </header>
+
+        <!-- Submission Form -->
+        <section class="form-container fade-in">
+            <div class="form-card">
+                <p class="form-note">
+                    📝 Submissions are reviewed by the dev team before being added to the catalog.
+                </p>
+                
+                <form id="submitForm" aria-label="AI tool submission form">
+                    <!-- Your Name -->
+                    <div class="form-group">
+                        <label for="userName">Your Name *</label>
+                        <input 
+                            type="text" 
+                            id="userName" 
+                            name="userName" 
+                            required 
+                            placeholder="Enter your full name"
+                            aria-required="true"
+                        >
+                    </div>
+
+                    <!-- Your Email -->
+                    <div class="form-group">
+                        <label for="userEmail">Your Email *</label>
+                        <input 
+                            type="email" 
+                            id="userEmail" 
+                            name="userEmail" 
+                            required 
+                            placeholder="your.email@example.com"
+                            aria-required="true"
+                        >
+                    </div>
+
+                    <!-- AI Tool Name -->
+                    <div class="form-group">
+                        <label for="aiName">AI/Tool Name *</label>
+                        <input 
+                            type="text" 
+                            id="aiName" 
+                            name="aiName" 
+                            required 
+                            placeholder="e.g., ChatGPT, DALL-E"
+                            aria-required="true"
+                        >
+                    </div>
+
+                    <!-- URL -->
+                    <div class="form-group">
+                        <label for="aiUrl">Tool URL *</label>
+                        <input 
+                            type="url" 
+                            id="aiUrl" 
+                            name="aiUrl" 
+                            required 
+                            placeholder="https://example.com"
+                            aria-required="true"
+                        >
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required aria-required="true">
+                            <option value="">-- Select a category --</option>
+                            <option value="language-model">Language Model</option>
+                            <option value="image-ai">Image AI</option>
+                            <option value="voice">Voice</option>
+                            <option value="tools">Tools</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="form-group">
+                        <label for="pricing">Pricing *</label>
+                        <select id="pricing" name="pricing" required aria-required="true">
+                            <option value="">-- Select pricing model --</option>
+                            <option value="free">Free</option>
+                            <option value="freemium">Freemium</option>
+                            <option value="paid">Paid</option>
+                        </select>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description">Short Description *</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            rows="4" 
+                            required 
+                            placeholder="Briefly describe what this AI tool does..."
+                            aria-required="true"
+                        ></textarea>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="form-group">
+                        <label for="tags">Tags (optional)</label>
+                        <input 
+                            type="text" 
+                            id="tags" 
+                            name="tags" 
+                            placeholder="e.g., #LLM #ChatBot #NLP"
+                        >
+                        <small>Separate tags with spaces or commas</small>
+                    </div>
+
+                    <!-- Terms Checkbox -->
+                    <div class="form-group checkbox-group">
+                        <input 
+                            type="checkbox" 
+                            id="terms" 
+                            name="terms" 
+                            required 
+                            aria-required="true"
+                        >
+                        <label for="terms">
+                            I confirm this submission is not copyrighted or spam *
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">Submit AI Tool</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal (Hidden by default) -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <div class="modal-icon">✅</div>
+            <h2>Thank You!</h2>
+            <p>Your submission has been received and is pending developer review.</p>
+            <button class="btn-modal" id="modalBtn">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2024 AI Finder. All rights reserved.</p>
+        <p><a href="frameset.html">View Legacy Frameset</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

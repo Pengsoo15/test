@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Timeline - AI Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Timeline-specific styles */
+        .timeline-container {
+            padding: 3rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-header p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* Green vertical line */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        /* Timeline items */
+        .timeline-item {
+            padding: 20px 30px;
+            position: relative;
+            width: 50%;
+            background: var(--card-bg);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 8px var(--shadow);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s ease-out;
+        }
+
+        /* Left items */
+        .left {
+            left: 0;
+            padding-right: 40px;
+        }
+
+        /* Right items */
+        .right {
+            left: 50%;
+            padding-left: 40px;
+        }
+
+        /* Circles */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+            top: 25px;
+            z-index: 10;
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+
+        /* Circle left/right position */
+        .left::before { right: -12px; }
+        .right::before { left: -12px; }
+
+        /* Fade-in animation when visible */
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item h3 {
+            margin-top: 0;
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            margin: 0;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 60px !important;
+                padding-right: 20px !important;
+            }
+
+            .timeline-item::before {
+                left: 11px !important;
+            }
+
+            .left, .right {
+                left: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="nav-container">
+        <div class="nav-brand">AI Finder</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            
+            <!-- Dropdown Menu for "What is AI?" -->
+            <li class="dropdown">
+                <button class="dropbtn">
+                    What is AI?
+                    <span class="arrow">▾</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="what-is-ai.html">What is AI?</a></li>
+                    <li><a href="ai-timeline.html">AI Timeline</a></li>
+                    <li><a href="ai-quiz.html">AI Quiz</a></li>
+                    <li><a href="ai-chatbot.html">AI Chatbot</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="list-of-ai.html">AI Catalog</a></li>
+            <li><a href="frameset.html">AI Glossary</a></li>
+            <li><a href="submit-ai.html">Submit AI</a></li>
+            <li><a href="about-the-dev.html">About</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    🌙
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <!-- Main Content -->
+    <main class="timeline-container fade-in">
+        <header class="timeline-header">
+            <h1>📜 AI History Timeline</h1>
+            <p>Key milestones in the evolution of Artificial Intelligence</p>
+        </header>
+
+        <div class="timeline">
+            <div class="timeline-item left">
+                <h3>1950 – Turing Test</h3>
+                <p>Alan Turing proposes a test to measure machine intelligence, asking "Can machines think?"</p>
+            </div>
+
+            <div class="timeline-item right">
+                <h3>1956 – Birth of AI</h3>
+                <p>The Dartmouth Conference marks the official birth of Artificial Intelligence as a field of study.</p>
+            </div>
+
+            <div class="timeline-item left">
+                <h3>1966 – ELIZA</h3>
+                <p>Joseph Weizenbaum creates ELIZA, one of the first chatbots, simulating a psychotherapist.</p>
+            </div>
+
+            <div class="timeline-item right">
+                <h3>1997 – Deep Blue</h3>
+                <p>IBM's Deep Blue defeats world chess champion Garry Kasparov, marking a milestone in AI capabilities.</p>
+            </div>
+
+            <div class="timeline-item left">
+                <h3>2011 – IBM Watson</h3>
+                <p>Watson wins Jeopardy!, demonstrating advanced natural language processing abilities.</p>
+            </div>
+
+            <div class="timeline-item right">
+                <h3>2012 – Deep Learning Breakthrough</h3>
+                <p>AlexNet revolutionizes computer vision, starting the deep learning boom in AI research.</p>
+            </div>
+
+            <div class="timeline-item left">
+                <h3>2016 – AlphaGo</h3>
+                <p>DeepMind's AlphaGo defeats Lee Sedol in Go, a game considered far more complex than chess.</p>
+            </div>
+
+            <div class="timeline-item right">
+                <h3>2020 – GPT-3</h3>
+                <p>OpenAI releases GPT-3, a massive language model capable of human-like text generation.</p>
+            </div>
+
+            <div class="timeline-item left">
+                <h3>2022 – ChatGPT & Generative AI</h3>
+                <p>Large language models transform AI interaction, making advanced AI accessible to everyone globally.</p>
+            </div>
+
+            <div class="timeline-item right">
+                <h3>2024 – Multimodal AI</h3>
+                <p>AI systems that can process text, images, audio, and video simultaneously become mainstream.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2024 AI Finder. All rights reserved.</p>
+        <p><a href="frameset.html">View AI Glossary</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Intersection Observer for timeline animation
+        const timelineItems = document.querySelectorAll('.timeline-item');
+
+        const timelineObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    timelineObserver.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, { threshold: 0.2 });
+
+        timelineItems.forEach(item => timelineObserver.observe(item));
+    </script>
+</body>
+</html>

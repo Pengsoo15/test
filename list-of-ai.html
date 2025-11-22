@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Catalog - AI Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+   <nav class="navbar" aria-label="Main navigation">
+    <div class="nav-container">
+        <div class="nav-brand">AI Finder</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            
+            <!-- Dropdown Menu for "What is AI?" -->
+            <li class="dropdown">
+                <button class="dropbtn">
+                    What is AI?
+                    <span class="arrow">▾</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="what-is-ai.html">What is AI?</a></li>
+                    <li><a href="ai-timeline.html">AI Timeline</a></li>
+                    <li><a href="ai-quiz.html">AI Quiz</a></li>
+                    <li><a href="ai-chatbot.html">AI Chatbot</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="list-of-ai.html">AI Catalog</a></li>
+            <li><a href="frameset.html">AI Glossary</a></li>
+            <li><a href="submit-ai.html">Submit AI</a></li>
+            <li><a href="about-the-dev.html">About</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    🌙
+                </button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <!-- Main Content -->
+    <main class="content-main">
+        <header class="page-header fade-in">
+            <h1>AI Tool Catalog</h1>
+            <p class="page-subtitle">Discover powerful AI tools for your projects</p>
+        </header>
+
+        <!-- AI Cards Grid -->
+        <section class="ai-grid fade-in">
+            <!-- Card 1: Gemini 3 -->
+            <article class="ai-card">
+                <img src="https://via.placeholder.com/60/4285F4/ffffff?text=G" alt="Gemini logo" class="ai-logo">
+                <h3>Gemini 3</h3>
+                <p class="ai-description">Google's multimodal model for reasoning and generation.</p>
+                <div class="ai-tags">
+                    <span class="tag">#LLM</span>
+                    <span class="tag">#Assistant</span>
+                </div>
+                <div class="ai-pricing">
+                    <span class="price-badge freemium">Freemium</span>
+                </div>
+                <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="ai-link">Read more →</a>
+            </article>
+
+            <!-- Card 2: ChatGPT -->
+            <article class="ai-card">
+                <img src="https://via.placeholder.com/60/10A37F/ffffff?text=C" alt="ChatGPT logo" class="ai-logo">
+                <h3>ChatGPT</h3>
+                <p class="ai-description">Conversational language model for writing and coding help.</p>
+                <div class="ai-tags">
+                    <span class="tag">#LLM</span>
+                    <span class="tag">#Chat</span>
+                </div>
+                <div class="ai-pricing">
+                    <span class="price-badge freemium">Freemium</span>
+                </div>
+                <a href="https://chat.openai.com" target="_blank" rel="noopener noreferrer" class="ai-link">Read more →</a>
+            </article>
+
+            <!-- Card 3: Claude -->
+            <article class="ai-card">
+                <img src="https://via.placeholder.com/60/D97757/ffffff?text=C" alt="Claude logo" class="ai-logo">
+                <h3>Claude</h3>
+                <p class="ai-description">Large model focused on helpfulness and safety.</p>
+                <div class="ai-tags">
+                    <span class="tag">#LLM</span>
+                </div>
+                <div class="ai-pricing">
+                    <span class="price-badge freemium">Freemium</span>
+                </div>
+                <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="ai-link">Read more →</a>
+            </article>
+
+            <!-- Card 4: Meta SAM 3D -->
+            <article class="ai-card">
+                <img src="https://via.placeholder.com/60/0668E1/ffffff?text=M" alt="Meta SAM logo" class="ai-logo">
+                <h3>Meta SAM 3D</h3>
+                <p class="ai-description">Reconstructs objects/humans in 3D from photos.</p>
+                <div class="ai-tags">
+                    <span class="tag">#3D</span>
+                    <span class="tag">#Vision</span>
+                </div>
+                <div class="ai-pricing">
+                    <span class="price-badge free">Free</span>
+                </div>
+                <a href="https://ai.meta.com" target="_blank" rel="noopener noreferrer" class="ai-link">Read more →</a>
+            </article>
+
+            <!-- Card 5: Runway ML -->
+            <article class="ai-card">
+                <img src="https://via.placeholder.com/60/000000/ffffff?text=R" alt="Runway logo" class="ai-logo">
+                <h3>Runway ML</h3>
+                <p class="ai-description">Tools for creators: video, image generation, editing.</p>
+                <div class="ai-tags">
+                    <span class="tag">#CreativeAI</span>
+                </div>
+                <div class="ai-pricing">
+                    <span class="price-badge freemium">Freemium</span>
+                </div>
+                <a href="https://runwayml.com" target="_blank" rel="noopener noreferrer" class="ai-link">Read more →</a>
+            </article>
+
+            <!-- Card 6: ElevenLabs -->
+            <article class="ai-card">
+                <img src="https://via.placeholder.com/60/6366F1/ffffff?text=11" alt="ElevenLabs logo" class="ai-logo">
+                <h3>ElevenLabs</h3>
+                <p class="ai-description">High-quality AI voice generation.</p>
+                <div class="ai-tags">
+                    <span class="tag">#AudioAI</span>
+                </div>
+                <div class="ai-pricing">
+                    <span class="price-badge paid">Paid</span>
+                </div>
+                <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" class="ai-link">Read more →</a>
+            </article>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2024 AI Finder. All rights reserved.</p>
+        <p><a href="frameset.html">View Legacy Frameset</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
